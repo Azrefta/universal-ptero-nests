@@ -1,0 +1,55 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-05-19T17:59:27+07:00",
+    "name": "Universal Node.js",
+    "author": "azrefta@gmail.com",
+    "description": "A flexible Node.js egg designed for universal usage. Supports multiple Node.js versions, customizable install & startup scripts, and smart Git clone behavior. Based on https:\/\/github.com\/Azrefta\/universal-ptero-nests",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/parkervcp\/yolks:nodejs_24": "ghcr.io\/parkervcp\/yolks:nodejs_24",
+        "ghcr.io\/parkervcp\/yolks:nodejs_23": "ghcr.io\/parkervcp\/yolks:nodejs_23",
+        "ghcr.io\/parkervcp\/yolks:nodejs_20": "ghcr.io\/parkervcp\/yolks:nodejs_20",
+        "ghcr.io\/parkervcp\/yolks:nodejs_18": "ghcr.io\/parkervcp\/yolks:nodejs_18"
+    },
+    "file_denylist": [],
+    "startup": "curl -sSL https:\/\/raw.githubusercontent.com\/Azrefta\/universal-ptero-nests\/refs\/heads\/main\/command\/startup-node-js.sh | bash",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": [\r\n        \":\/home\/container$\",\r\n        \"STARTUP \/home\/container\"\r\n    ]\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n\r\n# Update paket dan install semua dependensi yang diperlukan\r\napt update -y && apt install -y \\\r\n  git \\\r\n  curl \\\r\n  jq \\\r\n  file \\\r\n  unzip \\\r\n  make \\\r\n  gcc \\\r\n  g++ \\\r\n  python3 \\\r\n  libtool \\\r\n  wget \\\r\n  openssh-server",
+            "container": "node:14-buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Install Command",
+            "description": "Optional command to install dependencies (e.g. yarn install, npm ci, etc). If empty, will default to 'npm install'.",
+            "env_variable": "INSTALL_COMMAND",
+            "default_value": "npm install",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Running Script",
+            "description": "Command to start your app (e.g. node index.js, npm run dev)",
+            "env_variable": "RUN_COMMAND",
+            "default_value": "npm start",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
