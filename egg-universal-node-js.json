@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2025-05-19T17:59:27+07:00",
+    "exported_at": "2025-05-21T14:28:03+07:00",
     "name": "Universal Node.js",
     "author": "azrefta@gmail.com",
     "description": "A flexible Node.js egg designed for universal usage. Supports multiple Node.js versions, customizable install & startup scripts, and smart Git clone behavior. Based on https:\/\/github.com\/Azrefta\/universal-ptero-nests",
@@ -16,7 +16,7 @@
         "ghcr.io\/parkervcp\/yolks:nodejs_18": "ghcr.io\/parkervcp\/yolks:nodejs_18"
     },
     "file_denylist": [],
-    "startup": "curl -sSL https:\/\/raw.githubusercontent.com\/Azrefta\/universal-ptero-nests\/refs\/heads\/main\/command\/startup-node-js.sh | bash",
+    "startup": "curl -sSL {{OPERATE}} | bash",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": [\r\n        \":\/home\/container$\",\r\n        \"STARTUP \/home\/container\"\r\n    ]\r\n}",
@@ -25,7 +25,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n\r\n# Update paket dan install semua dependensi yang diperlukan\r\napt update -y && apt install -y \\\r\n  git \\\r\n  curl \\\r\n  jq \\\r\n  file \\\r\n  unzip \\\r\n  make \\\r\n  gcc \\\r\n  g++ \\\r\n  python3 \\\r\n  libtool \\\r\n  wget \\\r\n  openssh-server",
+            "script": "#!\/bin\/bash\r\n\r\napt update -y && apt install -y curl\r\n\r\ncurl -sSL https:\/\/raw.githubusercontent.com\/Azrefta\/universal-ptero-nests\/refs\/heads\/main\/command\/node-js\/installation.sh | bash",
             "container": "node:14-buster-slim",
             "entrypoint": "bash"
         }
@@ -49,6 +49,16 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Run Background",
+            "description": "This is a background operation that runs a command when the system starts. It uses the environment variable OPERATE to store a script URL that can be executed automatically.",
+            "env_variable": "OPERATE",
+            "default_value": "https:\/\/raw.githubusercontent.com\/Azrefta\/universal-ptero-nests\/refs\/heads\/main\/command\/node-js\/start.sh",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "string",
             "field_type": "text"
         }
     ]
